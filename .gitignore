@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
+
+# Go
+bin/
+stat/stat
+stat/stat-service
+
+# OS
+.DS_Store
+
+# Data
+data/
+*.db
+
+# Env
+.env
