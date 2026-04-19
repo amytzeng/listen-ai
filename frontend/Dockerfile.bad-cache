@@ -1,0 +1,22 @@
+# frontend/Dockerfile.bad-cache
+# BAD EXAMPLE: copying the full app before installing deps breaks Docker layer caching
+# when application files change frequently.
+
+FROM python:3.13-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# Copy the entire application first (includes app.py and other files).
+COPY . /app
+
+# Install dependencies after copying code.
+# If any copied file changes, this layer is invalidated and pip install reruns.
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+EXPOSE 8501
+ENV GATEWAY_URL=http://localhost:8000
+
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
